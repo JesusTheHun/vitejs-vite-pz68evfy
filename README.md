@@ -1,6 +1,6 @@
 # Storybook issue reproduction
 
-Issue 
+Issue https://github.com/storybookjs/storybook/issues/31679
 
 ## Install
 
