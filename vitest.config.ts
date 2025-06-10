@@ -8,16 +8,6 @@ import viteConfig from './vite.config'
 export default mergeConfig(
   viteConfig,
   defineConfig({
-    plugins: [
-      storybookTest({
-        storybookScript: 'pnpm run storybook --ci',
-        tags: {
-          include: ['test'],
-          exclude: ['todo', 'wip'],
-          skip: ['skip'],
-        },
-      }),
-    ],
     optimizeDeps: {
       entries: ['react/jsx-dev-runtime', 'react-dom/client'],
     },
@@ -42,13 +32,46 @@ export default mergeConfig(
           },
         },
         {
+          plugins: [
+            storybookTest({
+              storybookScript: 'pnpm run storybook --ci',
+              tags: {
+                include: ['test'],
+                exclude: ['todo', 'wip'],
+                skip: ['skip'],
+              },
+            }),
+          ],
           test: {
             name: 'storybook',
+            setupFiles: ['.storybook/vitest.setup.ts'],
             browser: {
               enabled: true,
               headless: true,
               provider: 'playwright',
               instances: [{ browser: 'chromium' }],
+            },
+          },
+        },
+        {
+          plugins: [
+            storybookTest({
+              storybookScript: 'pnpm run storybook --ci',
+              tags: {
+                include: ['test'],
+                exclude: ['todo', 'wip'],
+                skip: ['skip'],
+              },
+            }),
+          ],
+          test: {
+            name: 'storybook-ci',
+            setupFiles: ['.storybook/vitest.setup.ts'],
+            browser: {
+              enabled: true,
+              headless: true,
+              provider: 'playwright',
+              instances: [{ browser: 'chromium' }, { browser: 'firefox'}, { browser: 'webkit'}],
             },
           },
         },
